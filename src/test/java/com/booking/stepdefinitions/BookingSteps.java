@@ -11,7 +11,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -26,34 +25,22 @@ public class BookingSteps {
 
     @Given("a valid booking payload")
     public void aValidBookingPayload() {
-        Booking booking = new Booking();
-        booking.setRoomid(1);
-        booking.setFirstname("John");
-        booking.setLastname("Doe");
-        booking.setDepositpaid(true);
-        booking.setBookingdates(new BookingDates(
-                LocalDate.now().plusDays(3).toString(),
-                LocalDate.now().plusDays(5).toString()
-        ));
-        booking.setEmail("candidate+" + UUID.randomUUID().toString().substring(0, 8) + "@mail.com");
-        booking.setPhone("01234567890");
-
-        context.setRequest(booking);
+        setRequest(new BookingBuilder().build());
     }
 
     @Given("a booking payload with invalid email")
     public void aBookingPayloadWithInvalidEmail() {
-        context.setRequest(new BookingBuilder().withEmail("invalid-email").build());
+        setRequest(new BookingBuilder().withEmail("invalid-email").build());
     }
 
     @Given("a booking payload with firstname shorter than allowed")
     public void aBookingPayloadWithShortFirstname() {
-        context.setRequest(new BookingBuilder().withFirstname("Jo").build());
+        setRequest(new BookingBuilder().withFirstname("Jo").build());
     }
 
     @Given("a booking payload with phone {string}")
     public void aBookingPayloadWithPhone(String phone) {
-        context.setRequest(new BookingBuilder().withPhone(phone).build());
+        setRequest(new BookingBuilder().withPhone(phone).build());
     }
 
     @Given("a booking payload with checkout before checkin")
@@ -61,11 +48,7 @@ public class BookingSteps {
         LocalDate checkin = LocalDate.now().plusDays(5);
         LocalDate checkout = checkin.minusDays(1);
 
-        context.setRequest(
-                new BookingBuilder()
-                        .withDates(checkin.toString(), checkout.toString())
-                        .build()
-        );
+        setRequest(new BookingBuilder().withDates(checkin.toString(), checkout.toString()).build());
     }
 
     @When("I create the booking")
@@ -81,5 +64,9 @@ public class BookingSteps {
     @Then("the API should return a validation error containing {string}")
     public void theApiShouldReturnAValidationErrorContaining(String expectedErrorMessage) {
         BookingAssertions.assertValidationError(context.getResponse(), expectedErrorMessage);
+    }
+
+    private void setRequest(Booking booking) {
+        context.setRequest(booking);
     }
 }
