@@ -25,4 +25,9 @@ Feature: Create a booking
       | 1234567890             |
       | 1234567890123456789012 |
 
-    
+  Scenario: Reject a booking when checkout is before checkin
+    Given a booking payload with checkout before checkin
+    When I create the booking
+    Then the API should return a validation error containing "Failed to create booking"
+
+

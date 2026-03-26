@@ -56,6 +56,11 @@ public class BookingSteps {
         context.setRequest(new BookingBuilder().withPhone(phone).build());
     }
 
+    @Given("a booking payload with checkout before checkin")
+    public void aBookingPayloadWithCheckoutBeforeCheckin() {
+        context.setRequest(new BookingBuilder().withDates("2030-05-10", "2030-05-05").build());
+    }
+
     @When("I create the booking")
     public void iCreateTheBooking() {
         context.setResponse(bookingClient.createBooking(context.getRequest()));
