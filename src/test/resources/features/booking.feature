@@ -14,3 +14,15 @@ Feature: Create a booking
     Given a booking payload with firstname shorter than allowed
     When I create the booking
     Then the API should return a validation error containing "size must be between 3 and 18"
+
+  Scenario Outline: Reject a booking with invalid phone length
+    Given a booking payload with phone "<phone>"
+    When I create the booking
+    Then the API should return a validation error containing "size must be between 11 and 21"
+
+    Examples:
+      | phone                  |
+      | 1234567890             |
+      | 1234567890123456789012 |
+
+    

@@ -51,6 +51,11 @@ public class BookingSteps {
         context.setRequest(new BookingBuilder().withFirstname("Jo").build());
     }
 
+    @Given("a booking payload with phone {string}")
+    public void aBookingPayloadWithPhone(String phone) {
+        context.setRequest(new BookingBuilder().withPhone(phone).build());
+    }
+
     @When("I create the booking")
     public void iCreateTheBooking() {
         context.setResponse(bookingClient.createBooking(context.getRequest()));
