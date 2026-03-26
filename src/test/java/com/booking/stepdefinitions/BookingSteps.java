@@ -1,5 +1,6 @@
 package com.booking.stepdefinitions;
 
+import com.booking.assertions.BookingAssertions;
 import com.booking.client.BookingClient;
 import com.booking.context.TestContext;
 import com.booking.model.Booking;
@@ -46,6 +47,6 @@ public class BookingSteps {
 
     @Then("the booking should be created successfully")
     public void theBookingShouldBeCreatedSuccessfully() {
-        assertEquals(200, context.getResponse().statusCode());
+        BookingAssertions.assertBookingCreated(context.getResponse(), context.getRequest());
     }
 }
