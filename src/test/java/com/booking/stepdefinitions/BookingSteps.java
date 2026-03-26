@@ -46,6 +46,11 @@ public class BookingSteps {
         context.setRequest(new BookingBuilder().withEmail("invalid-email").build());
     }
 
+    @Given("a booking payload with firstname shorter than allowed")
+    public void aBookingPayloadWithShortFirstname() {
+        context.setRequest(new BookingBuilder().withFirstname("Jo").build());
+    }
+
     @When("I create the booking")
     public void iCreateTheBooking() {
         context.setResponse(bookingClient.createBooking(context.getRequest()));
