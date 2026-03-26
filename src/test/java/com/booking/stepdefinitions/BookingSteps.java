@@ -58,7 +58,14 @@ public class BookingSteps {
 
     @Given("a booking payload with checkout before checkin")
     public void aBookingPayloadWithCheckoutBeforeCheckin() {
-        context.setRequest(new BookingBuilder().withDates("2030-05-10", "2030-05-05").build());
+        LocalDate checkin = LocalDate.now().plusDays(5);
+        LocalDate checkout = checkin.minusDays(1);
+
+        context.setRequest(
+                new BookingBuilder()
+                        .withDates(checkin.toString(), checkout.toString())
+                        .build()
+        );
     }
 
     @When("I create the booking")
