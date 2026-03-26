@@ -18,6 +18,12 @@
         <!-- Cucumber Dependencies -->
         <dependency>
             <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.22.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>7.22.2</version>
         </dependency>
